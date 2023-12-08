@@ -9,4 +9,6 @@ public interface TodoListService {
     public void AddTodoListService(TodoList todoList);
     boolean RemoveTodoListService(Integer number);
     boolean UpdateTodoListService(UUID number, TodoList updateTodoList);
+
+    boolean RemoveTodoListService(UUID number);
 }

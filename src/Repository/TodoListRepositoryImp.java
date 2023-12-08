@@ -54,5 +54,15 @@ public class TodoListRepositoryImp implements TodoListRepository {
         }
         return false;
     }
+    @Override
+    public boolean deleteUUID(UUID number) {
+        for (int i = 0; i < this.todoLists.length; i++) {
+            if (this.todoLists[i] != null && this.todoLists[i].getNoIdentity() != null && this.todoLists[i].getNoIdentity().equals(number)) {
+                this.todoLists[i] = null;
+                return true;
+            }
+        }
+        return false;
+    }
 
 }

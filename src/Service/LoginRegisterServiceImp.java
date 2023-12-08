@@ -13,7 +13,6 @@ public class LoginRegisterServiceImp implements LoginRegisterService {
 
     @Override
     public void showUserPassword() {
-        System.out.println("DATABASE USER PASSWORD");
         Integer i = 0;
         for (var user : this.loginRegisterRepositoryImp.findAll()) {
             if (user != null) {
@@ -33,10 +32,12 @@ public class LoginRegisterServiceImp implements LoginRegisterService {
     @Override
     public boolean loginService(String username, String password) {
         if (this.loginRegisterRepositoryImp.LoginUser(username, password)) {
-            System.out.println("Sukses login");
+            System.out.println("Succes Login");
+            return true;
         } else {
-            System.out.println("Gagal login");
+            throw new RuntimeException("Invalid Login");
         }
-        return true;
     }
+    
+
 }

@@ -35,9 +35,9 @@ public class TodoListServiceImp implements TodoListService {
     @Override
     public boolean RemoveTodoListService(Integer number) {
         if (this.todoListRepositoryImp.delete(number)) {
-            System.out.println("Sukses menghapus TODO");
+            System.out.println("Success deleted TODO");
         } else {
-            System.out.println("Gagal Menghapus TODO");
+            System.out.println("Invalid deleted TODO");
         }
         return true;
     }
@@ -45,9 +45,9 @@ public class TodoListServiceImp implements TodoListService {
     @Override
     public boolean UpdateTodoListService(UUID number, TodoList updateTodoList) {
         if (this.todoListRepositoryImp.update(number, updateTodoList)) {
-            System.out.println("Sukses mengupdate TODO");
+            System.out.println("Success Update TODO");
         } else {
-            System.out.println("Gagal Menghapus TODO");
+            System.out.println("Invalid Update TODO");
         }
         return true;
     }
@@ -55,5 +55,8 @@ public class TodoListServiceImp implements TodoListService {
     public TodoList[] getTodoLists() {
         return todoListRepositoryImp.findAll();
     }
-
+    @Override
+    public boolean RemoveTodoListService(UUID number) {
+        return todoListRepositoryImp.deleteUUID(number);
+    }
 }

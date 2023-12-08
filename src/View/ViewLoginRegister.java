@@ -23,7 +23,6 @@ public class ViewLoginRegister {
         System.out.print("Password: ");
         String password = input.nextLine();
 
-        // Validate input, check if username already exists, etc.
 
         this.loginRegisterServiceImp.registerUser(new LoginRegister(username, password));
         System.out.println("User successfully registered!");

@@ -9,5 +9,7 @@ public interface TodoListRepository {
     boolean delete(Integer number);
     TodoList[] findAll();
     boolean update(UUID number, TodoList updateTodoList);
+
+    boolean deleteUUID(UUID number);
 }
 
