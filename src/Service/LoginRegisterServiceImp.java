@@ -26,6 +26,7 @@ public class LoginRegisterServiceImp implements LoginRegisterService {
     @Override
     public void registerUser(LoginRegister loginRegister) {
         this.loginRegisterRepositoryImp.save(loginRegister);
+        System.out.println("Successfully register with username : "+loginRegister.getUsername());
     }
 
 

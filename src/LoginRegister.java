@@ -67,7 +67,6 @@ public class LoginRegister {
             }
         });
 
-
         btnRegister.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

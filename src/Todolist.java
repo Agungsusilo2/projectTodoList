@@ -36,6 +36,7 @@ public class Todolist {
     private JButton btnDelete;
     private JButton btnUpdate;
     private JLabel lblMessage;
+    private JComboBox comboBoxCategories;
 
     public JPanel getJpanelTodo() {
         return jpanelTodo;
@@ -52,6 +53,10 @@ public class Todolist {
         categoryGroup.add(btnCreative);
         categoryGroup.add(btnTrasactional);
 
+        for (Categories categories : Categories.values()){
+            comboBoxCategories.addItem(categories);
+        }
+
         TodoListServiceImp todoListServiceImp = new TodoListServiceImp(new TodoListRepositoryImp());
         LoginRegisterServiceImp loginRegisterServiceImp = new LoginRegisterServiceImp(new LoginRegisterRepositoryImp());
 
@@ -60,6 +65,25 @@ public class Todolist {
 
         ListSelectionModel selectionModel = tableTodo.getSelectionModel();
         selectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        final String[] category = {""};
+        comboBoxCategories.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Categories selectedCategory = (Categories) comboBoxCategories.getSelectedItem();
+
+                if (selectedCategory != null) {
+                    switch (selectedCategory) {
+                        case INFORMATIONAL -> category[0] = Categories.INFORMATIONAL.name();
+                        case CREATIVE -> category[0] = Categories.CREATIVE.name();
+                        case TRASACTIONAL -> category[0] = Categories.TRASACTIONAL.name();
+                        case PRODUCTIVITY -> category[0] = Categories.PRODUCTIVITY.name();
+                        default -> {
+                            return;
+                        }
+                    }
+                }
+            }
+        });
 
         selectionModel.addListSelectionListener(new ListSelectionListener() {
             @Override
@@ -70,23 +94,15 @@ public class Todolist {
                         Object taskObject = tableTodo.getValueAt(selectedRow, 0);
                         Object dateObject = tableTodo.getValueAt(selectedRow, 1);
                         Object descriptionObject = tableTodo.getValueAt(selectedRow, 2);
-                        Object categoryObject = tableTodo.getValueAt(selectedRow, 3);
+                        Object categoryObject = tableTodo.getValueAt(selectedRow,3);
 
                         String task = (taskObject!= null) ? taskObject.toString() : "";
                         String date = (dateObject != null) ? dateObject.toString() : "";
                         String description = (descriptionObject != null) ? descriptionObject.toString() : "";
-                        Categories category = (categoryObject != null) ? (Categories) categoryObject : null;
 
-                        if (category == Categories.INFORMATIONAL) {
-                            btnInformational.setSelected(true);
-                        } else if (category == Categories.CREATIVE) {
-                            btnCreative.setSelected(true);
-                        } else if (category == Categories.TRASACTIONAL) {
-                            btnTrasactional.setSelected(true);
-                        } else if (category == Categories.PRODUCTIVITY) {
-                            btnTrasactional.setSelected(true);
-                        } else {
-                            categoryGroup.clearSelection();
+                        if (categoryObject != null) {
+                            Categories category = (Categories) categoryObject;
+                            comboBoxCategories.setSelectedItem(category);
                         }
 
                         fieldTask.setText(task);
@@ -106,9 +122,9 @@ public class Todolist {
                                         boolean removed = todoListServiceImp.RemoveTodoListService(nomorTodoList);
 
                                         if (removed) {
-                                            JOptionPane.showMessageDialog(null, "Data deleted successfully");
+                                            lblMessage.setText("Data deleted successfully");
                                         } else {
-                                            JOptionPane.showMessageDialog(null, "Invalid delete data");
+                                           lblMessage.setText("Invalid delete data");
                                         }
                                     } catch (NumberFormatException ex) {
                                         JOptionPane.showMessageDialog(null, "No identity not valid");
@@ -135,14 +151,10 @@ public class Todolist {
                                         String description = fieldDescription.getText();
 
                                         Categories category = null;
-                                        if (btnInformational.isSelected()) {
-                                            category = Categories.INFORMATIONAL;
-                                        } else if (btnProductivity.isSelected()) {
-                                            category = Categories.PRODUCTIVITY;
-                                        } else if (btnCreative.isSelected()) {
-                                            category = Categories.CREATIVE;
-                                        } else if (btnTrasactional.isSelected()) {
-                                            category = Categories.TRASACTIONAL;
+
+                                        Object categoriesSelected = comboBoxCategories.getSelectedItem();
+                                        if(categoriesSelected !=null){
+                                            category = (Categories) categoriesSelected;
                                         }
 
                                         TodoList updatedTodo = new TodoList(task, description, LocalDate.parse(date), category);
@@ -183,7 +195,6 @@ public class Todolist {
                 String date = fieldDate.getText();
                 String dateString = fieldDate.getText();
 
-
                 LocalDate dueDate;
                 try {
                     dueDate = LocalDate.parse(dateString);
@@ -196,20 +207,18 @@ public class Todolist {
 
                 String description = fieldDescription.getText();
 
-                String category = "";
-                if (btnInformational.isSelected()) {
-                    category = "INFORMATIONAL";
-                } else if (btnProductivity.isSelected()) {
-                    category = "CREATIVE";
-                } else if (btnCreative.isSelected()) {
-                    category = "TRASACTIONAL";
-                } else if (btnTrasactional.isSelected()) {
-                    category = "PRODUCTIVITY";
+                if (!category[0].isEmpty()) {
+
+                    try {
+                        TodoList newTodo = new TodoList(task, description, dueDate, Categories.valueOf(category[0]));
+                        todoListServiceImp.AddTodoListService(newTodo);
+                        lblMessage.setText("Successfully add TODO");
+                    } catch (IllegalArgumentException ex) {
+                        System.err.println("Invalid category selected: " + category[0]);
+                    }
+                } else {
+                    System.err.println("No category selected");
                 }
-
-
-                TodoList newTodo = new TodoList(task,description,dueDate,Categories.valueOf(category));
-                todoListServiceImp.AddTodoListService(newTodo);
 
                 fieldTask.setText("");
                 fieldDate.setText("");

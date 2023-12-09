@@ -3,7 +3,7 @@
   <grid id="27dc6" binding="jpanelTodo" layout-manager="GridLayoutManager" row-count="15" column-count="11" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="20" y="20" width="874" height="476"/>
+      <xy x="20" y="20" width="889" height="475"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -81,36 +81,12 @@
           <rows value="0"/>
         </properties>
       </component>
-      <component id="97e71" class="javax.swing.JRadioButton" binding="btnInformational">
-        <constraints>
-          <grid row="8" column="7" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="INFORMATIONAL"/>
-        </properties>
-      </component>
       <component id="5c11a" class="javax.swing.JLabel">
         <constraints>
           <grid row="8" column="6" row-span="4" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <text value=""/>
-        </properties>
-      </component>
-      <component id="45866" class="javax.swing.JRadioButton" binding="btnProductivity">
-        <constraints>
-          <grid row="11" column="7" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="PRODUCTIVITY"/>
-        </properties>
-      </component>
-      <component id="ea820" class="javax.swing.JRadioButton" binding="btnCreative">
-        <constraints>
-          <grid row="9" column="7" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="CREATIVE"/>
         </properties>
       </component>
       <component id="ca3da" class="javax.swing.JLabel" binding="lblCategories">
@@ -143,14 +119,6 @@
         </constraints>
         <properties>
           <text value=""/>
-        </properties>
-      </component>
-      <component id="834b4" class="javax.swing.JRadioButton" binding="btnTrasactional">
-        <constraints>
-          <grid row="10" column="7" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="TRASACTIONAL"/>
         </properties>
       </component>
       <component id="cf2ca" class="javax.swing.JLabel">
@@ -263,6 +231,12 @@
         <properties>
           <text value=""/>
         </properties>
+      </component>
+      <component id="dd359" class="javax.swing.JComboBox" binding="comboBoxCategories">
+        <constraints>
+          <grid row="9" column="7" row-span="2" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
       </component>
     </children>
   </grid>
