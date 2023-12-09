@@ -13,6 +13,9 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.UUID;
@@ -37,6 +40,7 @@ public class Todolist {
     private JButton btnUpdate;
     private JLabel lblMessage;
     private JComboBox comboBoxCategories;
+    private JButton saveToFileButton;
 
     public JPanel getJpanelTodo() {
         return jpanelTodo;
@@ -44,6 +48,41 @@ public class Todolist {
 
     public void setJpanelTodo(JPanel jpanelTodo) {
         this.jpanelTodo = jpanelTodo;
+    }
+
+    private void printToFile(String fileName){
+        try ( BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fileName))){
+
+            for (int i = 0; i < tableTodo.getColumnCount(); i++){
+                bufferedWriter.write(tableTodo.getColumnName(i));
+                if(i<tableTodo.getColumnCount() - 1){
+                    bufferedWriter.write("\t");
+                }else {
+                    bufferedWriter.write("\n");
+                }
+            }
+
+            for (int row = 0; row < tableTodo.getRowCount(); row++) {
+                for (int col = 0; col < tableTodo.getColumnCount(); col++) {
+                    Object value = tableTodo.getValueAt(row, col);
+                    if (value != null) {
+                        bufferedWriter.write(value.toString());
+                    }
+                    if (col < tableTodo.getColumnCount() - 1) {
+                        bufferedWriter.write("\t");
+                    } else {
+                        bufferedWriter.write("\n");
+                    }
+                }
+            }
+
+            bufferedWriter.flush();
+            System.out.println("Success "+fileName);
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     public Todolist() {
@@ -224,6 +263,17 @@ public class Todolist {
                 fieldDate.setText("");
                 fieldDescription.setText("");
 
+            }
+        });
+        saveToFileButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser jFileChooser = new JFileChooser();
+                int result = jFileChooser.showSaveDialog(null);
+                if(result == JFileChooser.APPROVE_OPTION){
+                    String path = jFileChooser.getSelectedFile().getAbsolutePath();
+                    printToFile(path);
+                }
             }
         });
     }
