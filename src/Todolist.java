@@ -53,22 +53,22 @@ public class Todolist {
     private void printToFile(String fileName){
         try ( BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fileName))){
 
-            for (int i = 0; i < tableTodo.getColumnCount(); i++){
-                bufferedWriter.write(tableTodo.getColumnName(i));
-                if(i<tableTodo.getColumnCount() - 1){
+            for (int i = 0; i < this.tableTodo.getColumnCount(); i++){
+                bufferedWriter.write(this.tableTodo.getColumnName(i));
+                if(i<this.tableTodo.getColumnCount() - 1){
                     bufferedWriter.write("\t");
                 }else {
                     bufferedWriter.write("\n");
                 }
             }
 
-            for (int row = 0; row < tableTodo.getRowCount(); row++) {
-                for (int col = 0; col < tableTodo.getColumnCount(); col++) {
-                    Object value = tableTodo.getValueAt(row, col);
+            for (int row = 0; row < this.tableTodo.getRowCount(); row++) {
+                for (int col = 0; col < this.tableTodo.getColumnCount(); col++) {
+                    Object value = this.tableTodo.getValueAt(row, col);
                     if (value != null) {
                         bufferedWriter.write(value.toString());
                     }
-                    if (col < tableTodo.getColumnCount() - 1) {
+                    if (col < this.tableTodo.getColumnCount() - 1) {
                         bufferedWriter.write("\t");
                     } else {
                         bufferedWriter.write("\n");
