@@ -10,5 +10,8 @@ public interface TodoListService {
     boolean RemoveTodoListService(Integer number);
     boolean UpdateTodoListService(UUID number, TodoList updateTodoList);
 
+    TodoList[] getTodoListSortedCategories();
+
+
     boolean RemoveTodoListService(UUID number);
 }

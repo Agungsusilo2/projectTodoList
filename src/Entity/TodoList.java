@@ -9,17 +9,17 @@ public class TodoList {
     private UUID noIdentity;
     private String addTask;
     private String description;
-    private LocalDate dueDate;
+    private LocalDate deadLine;
     private Categories categories;
 
     public TodoList() {
     }
 
-    public TodoList(String addTask, String description, LocalDate dueDate , Categories categories) {
+    public TodoList(String addTask, String description, LocalDate deadLine, Categories categories) {
         this.noIdentity = UUID.randomUUID();
         this.addTask = addTask;
         this.description = description;
-        this.dueDate = dueDate;
+        this.deadLine = deadLine;
         this.categories = categories;
     }
 
@@ -47,8 +47,8 @@ public class TodoList {
         this.description = description;
     }
 
-    public LocalDate getDueDate() {
-        return dueDate;
+    public LocalDate getDeadLine() {
+        return deadLine;
     }
 
     public Categories getCategories() {
@@ -59,8 +59,8 @@ public class TodoList {
         this.categories = categories;
     }
 
-    public void setDueDate(LocalDate dueDate) {
-        this.dueDate = dueDate;
+    public void setDeadLine(LocalDate deadLine) {
+        this.deadLine = deadLine;
     }
 
 }

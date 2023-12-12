@@ -11,5 +11,5 @@ public interface TodoListRepository {
     boolean update(UUID number, TodoList updateTodoList);
 
     boolean deleteUUID(UUID number);
-}
 
+}

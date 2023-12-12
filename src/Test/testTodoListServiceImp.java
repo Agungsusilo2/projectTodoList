@@ -1,22 +1,32 @@
 package Test;
 
 import Domain.Categories;
+import Entity.TodoList;
 import Repository.TodoListRepositoryImp;
 import Service.TodoListServiceImp;
+
+import java.time.LocalDate;
 
 public class testTodoListServiceImp {
     public static void main(String[] args) {
         TodoListRepositoryImp todoListRepositoryImp = new TodoListRepositoryImp();
         TodoListServiceImp todoListServiceImp = new TodoListServiceImp(todoListRepositoryImp);
 
-        Categories categories = Categories.INFORMATIONAL;
+        todoListServiceImp.AddTodoListService(new TodoList("Belajar Todo","Belajar todo", LocalDate.of(2023,12,4),
+                Categories.MEDIUM));
 
+        todoListServiceImp.AddTodoListService(new TodoList("Belajar Todo","Belajar todo", LocalDate.of(2023,11,9),
+                Categories.IMPORTANT));
 
-        todoListServiceImp.ShowTodoListService();
+        // Ambil daftar tugas yang sudah diurutkan
+        TodoList[] sortedTasks = todoListServiceImp.getTodoListSortedCategories();
 
-
-        todoListServiceImp.RemoveTodoListService(1);
-
-        todoListServiceImp.ShowTodoListService();
+        // Tampilkan daftar tugas yang sudah diurutkan
+        for (TodoList task : sortedTasks) {
+            if (task != null) {
+                System.out.println("Task: " + task.getAddTask() + ", Category: " + task.getCategories());
+            }
+        }
     }
 }
+

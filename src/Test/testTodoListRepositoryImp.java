@@ -13,10 +13,9 @@ public class testTodoListRepositoryImp {
         TodoListServiceImp todoListServiceImp = new TodoListServiceImp(todoListRepositoryImp);
 
         LocalDate current = LocalDate.of(2023,12,14);
-        Categories categories = Categories.INFORMATIONAL;
+        Categories categories = Categories.IMPORTANT;
         todoListRepositoryImp.todoLists[0] = new TodoList("Belajar PHP",
                 "Kita belajar php sampai 1 minggu",current,categories);
-        todoListServiceImp.ShowTodoListService();
         todoListServiceImp.ShowTodoListService();
 
     }

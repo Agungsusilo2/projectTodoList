@@ -1,8 +1,8 @@
 package Domain;
 
 public enum Categories {
-    INFORMATIONAL,
-    CREATIVE,
-    TRASACTIONAL,
-    PRODUCTIVITY
+    IMPORTANT,
+    MEDIUM,
+    NORMAL
+
 }

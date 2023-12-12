@@ -1,8 +1,6 @@
 import Domain.Categories;
 import Entity.TodoList;
-import Repository.LoginRegisterRepositoryImp;
 import Repository.TodoListRepositoryImp;
-import Service.LoginRegisterServiceImp;
 import Service.TodoListServiceImp;
 
 import javax.swing.*;
@@ -41,6 +39,7 @@ public class Todolist {
     private JLabel lblMessage;
     private JComboBox comboBoxCategories;
     private JButton saveToFileButton;
+    private JButton btnGetSortedTasks;
 
     public JPanel getJpanelTodo() {
         return jpanelTodo;
@@ -86,18 +85,20 @@ public class Todolist {
     }
 
     public Todolist() {
-        ButtonGroup categoryGroup = new ButtonGroup();
-        categoryGroup.add(btnInformational);
-        categoryGroup.add(btnProductivity);
-        categoryGroup.add(btnCreative);
-        categoryGroup.add(btnTrasactional);
+
+        TodoListServiceImp todoListServiceImp = new TodoListServiceImp(new TodoListRepositoryImp());
+
+        btnGetSortedTasks.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                TodoList[] sortedTasks = todoListServiceImp.getTodoListSortedCategories();
+                updateTable(sortedTasks);
+            }
+        });
 
         for (Categories categories : Categories.values()){
             comboBoxCategories.addItem(categories);
         }
-
-        TodoListServiceImp todoListServiceImp = new TodoListServiceImp(new TodoListRepositoryImp());
-        LoginRegisterServiceImp loginRegisterServiceImp = new LoginRegisterServiceImp(new LoginRegisterRepositoryImp());
 
         TableModelTodo tableModel = new TableModelTodo(todoListServiceImp);
         tableTodo.setModel(tableModel);
@@ -112,10 +113,9 @@ public class Todolist {
 
                 if (selectedCategory != null) {
                     switch (selectedCategory) {
-                        case INFORMATIONAL -> category[0] = Categories.INFORMATIONAL.name();
-                        case CREATIVE -> category[0] = Categories.CREATIVE.name();
-                        case TRASACTIONAL -> category[0] = Categories.TRASACTIONAL.name();
-                        case PRODUCTIVITY -> category[0] = Categories.PRODUCTIVITY.name();
+                        case IMPORTANT -> category[0] = Categories.IMPORTANT.name();
+                        case MEDIUM -> category[0] = Categories.MEDIUM.name();
+                        case NORMAL -> category[0] = Categories.NORMAL.name();
                         default -> {
                             return;
                         }
@@ -163,7 +163,7 @@ public class Todolist {
                                         if (removed) {
                                             lblMessage.setText("Data deleted successfully");
                                         } else {
-                                           lblMessage.setText("Invalid delete data");
+                                            lblMessage.setText("Invalid delete data");
                                         }
                                     } catch (NumberFormatException ex) {
                                         JOptionPane.showMessageDialog(null, "No identity not valid");
@@ -278,6 +278,12 @@ public class Todolist {
         });
     }
 
+    private void updateTable(TodoList[] tasks) {
+        TableModelTodo tableModel = new TableModelTodo(tasks);
+        tableTodo.setModel(tableModel);
+    }
+
+
     public static void main(String[] args) {
         JFrame frame = new JFrame("Todolist");
         frame.setContentPane(new Todolist().jpanelTodo);
@@ -290,6 +296,11 @@ public class Todolist {
         private final String[] COLUMNS = {"TASK", "DATE", "DESCRIPTION", "CATEGORIES"};
         private TodoListServiceImp todoListServiceImp;
         private TodoList[] todoLists;
+
+        public TableModelTodo(TodoList[] tasks) {
+            this.todoLists = tasks;
+        }
+
 
         public TableModelTodo(TodoListServiceImp todoListServiceImp) {
             this.todoListServiceImp = todoListServiceImp;
@@ -312,7 +323,7 @@ public class Todolist {
                 TodoList todo = todoLists[rowIndex];
                 return switch (columnIndex) {
                     case 0 -> todo.getAddTask();
-                    case 1 -> todo.getDueDate();
+                    case 1 -> todo.getDeadLine();
                     case 2 -> todo.getDescription();
                     case 3 -> todo.getCategories();
                     default -> null;
