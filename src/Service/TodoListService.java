@@ -2,16 +2,14 @@ package Service;
 
 import Entity.TodoList;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public interface TodoListService {
     void ShowTodoListService();
     public void AddTodoListService(TodoList todoList);
-    boolean RemoveTodoListService(Integer number);
     boolean UpdateTodoListService(UUID number, TodoList updateTodoList);
-
     TodoList[] getTodoListSortedCategories();
-
-
+    void intervalTime(LocalDateTime localDateTime);
     boolean RemoveTodoListService(UUID number);
 }

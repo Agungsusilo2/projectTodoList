@@ -20,23 +20,10 @@ public class TodoListRepositoryImp implements TodoListRepository {
             currentIndex++;
         }
         if (!added) {
-            throw new RuntimeException("Tidak Bisa Ditambahkan lagi karena sudah penuh kapasitasnya!!");
+            throw new IllegalStateException("Cannot add more items as the capacity is full!");
         }
     }
 
-    @Override
-    public boolean delete(Integer number) {
-        if (number >= this.todoLists.length || number < 0) {
-            return false;
-        }
-
-        for (int i = number - 1; i < this.todoLists.length - 1; i++) {
-            this.todoLists[i] = this.todoLists[i + 1];
-        }
-        this.todoLists[this.todoLists.length - 1] = null;
-
-        return true;
-    }
 
 
     @Override
@@ -56,13 +43,21 @@ public class TodoListRepositoryImp implements TodoListRepository {
     }
     @Override
     public boolean deleteUUID(UUID number) {
+        boolean removed = false;
         for (int i = 0; i < this.todoLists.length; i++) {
             if (this.todoLists[i] != null && this.todoLists[i].getNoIdentity() != null && this.todoLists[i].getNoIdentity().equals(number)) {
-                this.todoLists[i] = null;
-                return true;
+                for (int j = i; j < this.todoLists.length - 1; j++) {
+                    this.todoLists[j] = this.todoLists[j + 1];
+                }
+                this.todoLists[this.todoLists.length - 1] = null;
+                removed = true;
+                break;
             }
         }
-        return false;
+        return removed;
     }
+
+
+
 
 }

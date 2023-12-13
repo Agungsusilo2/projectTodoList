@@ -3,25 +3,28 @@ package Entity;
 import Domain.Categories;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 public class TodoList {
     private UUID noIdentity;
     private String addTask;
     private String description;
-    private LocalDate deadLine;
+    private LocalDateTime deadLine;
     private Categories categories;
 
     public TodoList() {
     }
 
-    public TodoList(String addTask, String description, LocalDate deadLine, Categories categories) {
+    public TodoList(String addTask, String description, LocalDateTime deadLine, Categories categories) {
         this.noIdentity = UUID.randomUUID();
         this.addTask = addTask;
         this.description = description;
         this.deadLine = deadLine;
         this.categories = categories;
     }
+
 
     public UUID getNoIdentity() {
         return noIdentity;
@@ -47,7 +50,7 @@ public class TodoList {
         this.description = description;
     }
 
-    public LocalDate getDeadLine() {
+    public LocalDateTime getDeadLine() {
         return deadLine;
     }
 
@@ -59,7 +62,7 @@ public class TodoList {
         this.categories = categories;
     }
 
-    public void setDeadLine(LocalDate deadLine) {
+    public void setDeadLine(LocalDateTime deadLine) {
         this.deadLine = deadLine;
     }
 
