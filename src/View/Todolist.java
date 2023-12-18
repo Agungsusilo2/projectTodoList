@@ -11,8 +11,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -25,7 +24,6 @@ public class Todolist {
     private JTextField fieldTask;
     private JTextField fieldDate;
     private JTextArea fieldDescription;
-    private JRadioButton btnInformational;
     private JRadioButton btnProductivity;
     private JButton btnAdd;
     private JLabel lblTask;
@@ -33,8 +31,6 @@ public class Todolist {
     private JLabel lblDescription;
     private JLabel descriptionLabel;
     private JLabel lblCategories;
-    private JRadioButton btnCreative;
-    private JRadioButton btnTrasactional;
     private JPanel jpanelTodo;
     private JTable tableTodo;
     private JButton btnDelete;
@@ -46,10 +42,6 @@ public class Todolist {
 
     public JPanel getJpanelTodo() {
         return jpanelTodo;
-    }
-
-    public void setJpanelTodo(JPanel jpanelTodo) {
-        this.jpanelTodo = jpanelTodo;
     }
 
     private void printToFile(String fileName){
@@ -96,6 +88,13 @@ public class Todolist {
             public void actionPerformed(ActionEvent e) {
                 TodoList[] sortedTasks = todoListServiceImp.getTodoListSortedCategories();
                 updateTable(sortedTasks);
+            }
+        });
+
+        jpanelTodo.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                tableTodo.clearSelection(); // Membersihkan pemilihan di dalam tabel
             }
         });
 
@@ -166,12 +165,14 @@ public class Todolist {
                                             TodoList selectedTodo = todoLists[selectedRow];
 
                                             if (selectedTodo != null) {
-                                                UUID nomorTodoList = selectedTodo.getNoIdentity();
+                                                UUID numberTodoList = selectedTodo.getNoIdentity();
 
-                                                boolean removed = todoListServiceImp.RemoveTodoListService(nomorTodoList);
+                                                boolean removed = todoListServiceImp.RemoveTodoListService(numberTodoList);
 
                                                 if (removed) {
                                                     lblMessage.setText("Data deleted successfully");
+
+                                                    updateTable(todoListServiceImp.getTodoLists());
                                                 } else {
                                                     lblMessage.setText("Invalid delete data");
                                                 }
@@ -184,8 +185,6 @@ public class Todolist {
                                     } catch (NumberFormatException ex) {
                                         JOptionPane.showMessageDialog(null, "No identity not valid");
                                     }
-                                } else {
-                                    JOptionPane.showMessageDialog(null, "Select the data to delete");
                                 }
                             }
                         });
@@ -337,11 +336,12 @@ public class Todolist {
 
         @Override
         public Object getValueAt(int rowIndex, int columnIndex) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
             if (todoLists[rowIndex] != null) {
                 TodoList todo = todoLists[rowIndex];
                 return switch (columnIndex) {
                     case 0 -> todo.getAddTask();
-                    case 1 -> todo.getDeadLine();
+                    case 1 -> todo.getDeadLine().format(formatter);
                     case 2 -> todo.getDescription();
                     case 3 -> todo.getCategories();
                     default -> null;

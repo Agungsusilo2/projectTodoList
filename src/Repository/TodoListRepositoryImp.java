@@ -44,20 +44,24 @@ public class TodoListRepositoryImp implements TodoListRepository {
     @Override
     public boolean deleteUUID(UUID number) {
         boolean removed = false;
+        int foundIndex = -1;
+
         for (int i = 0; i < this.todoLists.length; i++) {
             if (this.todoLists[i] != null && this.todoLists[i].getNoIdentity() != null && this.todoLists[i].getNoIdentity().equals(number)) {
-                for (int j = i; j < this.todoLists.length - 1; j++) {
-                    this.todoLists[j] = this.todoLists[j + 1];
-                }
-                this.todoLists[this.todoLists.length - 1] = null;
+                foundIndex = i;
                 removed = true;
                 break;
             }
         }
+
+
+        if (foundIndex != -1) {
+            for (int j = foundIndex; j < this.todoLists.length - 1; j++) {
+                this.todoLists[j] = this.todoLists[j + 1];
+            }
+            this.todoLists[this.todoLists.length - 1] = null;
+        }
+
         return removed;
     }
-
-
-
-
 }

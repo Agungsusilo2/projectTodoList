@@ -6,7 +6,6 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 public interface TodoListService {
-    void ShowTodoListService();
     public void AddTodoListService(TodoList todoList);
     boolean UpdateTodoListService(UUID number, TodoList updateTodoList);
     TodoList[] getTodoListSortedCategories();

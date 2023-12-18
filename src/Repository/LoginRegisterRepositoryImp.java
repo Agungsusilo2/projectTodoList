@@ -56,5 +56,4 @@ public class LoginRegisterRepositoryImp implements LoginRegisterRepository {
         return false;
     }
 
-
 }

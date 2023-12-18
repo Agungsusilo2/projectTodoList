@@ -26,7 +26,7 @@ public class LoginRegister {
     private JPasswordField fieldPasswordLogin;
 
     private LoginRegisterServiceImp loginRegisterServiceImp;
-
+    
     public static void main(String[] args) {
         JFrame frame = new JFrame("LoginRegister");
         frame.setContentPane(new LoginRegister().jpanelLoginRegister);
@@ -78,7 +78,7 @@ public class LoginRegister {
 
 
                 try {
-                    if (username.isEmpty() || username.isBlank()) {
+                    if (username.isEmpty()) {
                         throw new IllegalArgumentException("Username not Blank");
                     } else if (password.isEmpty()) {
                         throw new IllegalArgumentException("Password not Blank");

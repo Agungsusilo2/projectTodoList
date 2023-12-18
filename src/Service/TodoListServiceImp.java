@@ -25,20 +25,6 @@ public class TodoListServiceImp implements TodoListService {
     }
 
     @Override
-    public void ShowTodoListService() {
-        System.out.println("TODO LIST");
-        int i = 0;
-        for (var todo : this.todoListRepositoryImp.findAll()) {
-            if (todo != null) {
-                System.out.println(i + 1 + ". " + " No Identity " + todo.getNoIdentity() + " Todo : " + todo.getAddTask() +
-                        " Description : " + todo.getDescription()
-                        + " dueDate : " + todo.getDeadLine().toString() + " Categories : " + todo.getCategories().toString());
-                i++;
-            }
-        }
-    }
-
-    @Override
     public void AddTodoListService(TodoList todoList) {
         this.todoListRepositoryImp.save(todoList);
     }
@@ -126,8 +112,6 @@ public class TodoListServiceImp implements TodoListService {
         long delay = Duration.between(now, notificationTime).getSeconds();
         return Math.max(delay, 1);
     }
-
-
 
     public TodoList[] getTodoLists() {
         return todoListRepositoryImp.findAll();
