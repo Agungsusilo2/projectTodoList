@@ -50,7 +50,7 @@ public class Todolist {
             for (int i = 0; i < this.tableTodo.getColumnCount(); i++){
                 bufferedWriter.write(this.tableTodo.getColumnName(i));
                 if(i<this.tableTodo.getColumnCount() - 1){
-                    bufferedWriter.write("\t");
+                    bufferedWriter.write("\t\t");
                 }else {
                     bufferedWriter.write("\n");
                 }
@@ -94,15 +94,13 @@ public class Todolist {
         jpanelTodo.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                tableTodo.clearSelection(); // Membersihkan pemilihan di dalam tabel
+                tableTodo.clearSelection();
             }
         });
 
         for (Categories categories : Categories.values()){
             comboBoxCategories.addItem(categories);
         }
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
         TableModelTodo tableModel = new TableModelTodo(todoListServiceImp);
         tableTodo.setModel(tableModel);
@@ -115,15 +113,10 @@ public class Todolist {
             public void actionPerformed(ActionEvent e) {
                 Categories selectedCategory = (Categories) comboBoxCategories.getSelectedItem();
 
-                if (selectedCategory != null) {
-                    switch (selectedCategory) {
-                        case IMPORTANT -> category[0] = Categories.IMPORTANT.name();
-                        case MEDIUM -> category[0] = Categories.MEDIUM.name();
-                        case NORMAL -> category[0] = Categories.NORMAL.name();
-                        default -> {
-                            return;
-                        }
-                    }
+                if (selectedCategory != null) switch (selectedCategory) {
+                    case IMPORTANT -> category[0] = Categories.IMPORTANT.name();
+                    case MEDIUM -> category[0] = Categories.MEDIUM.name();
+                    case NORMAL -> category[0] = Categories.NORMAL.name();
                 }
             }
         });
@@ -281,7 +274,6 @@ public class Todolist {
             }
         });
 
-
         saveToFileButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -312,7 +304,7 @@ public class Todolist {
     private static class TableModelTodo extends AbstractTableModel {
         private final String[] COLUMNS = {"TASK", "DATE", "DESCRIPTION", "CATEGORIES"};
         private TodoListServiceImp todoListServiceImp;
-        private TodoList[] todoLists;
+        private final TodoList[] todoLists;
 
         public TableModelTodo(TodoList[] tasks) {
             this.todoLists = tasks;

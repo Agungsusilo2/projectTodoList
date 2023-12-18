@@ -4,7 +4,6 @@ package Entity;
 import java.util.UUID;
 
 public class LoginRegister {
-    private UUID noIdentity;
     private String username;
     private String password;
 
@@ -12,17 +11,9 @@ public class LoginRegister {
     }
 
     public LoginRegister(String username, String password) {
-        this.noIdentity = UUID.randomUUID();
+
         this.username = username;
         this.password = password;
-    }
-
-    public UUID getNoIdentity() {
-        return noIdentity;
-    }
-
-    public void setNoIdentity(UUID noIdentity) {
-        this.noIdentity = noIdentity;
     }
 
     public String getUsername() {

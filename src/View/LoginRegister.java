@@ -44,7 +44,7 @@ public class LoginRegister {
                 String password = String.valueOf(fieldPasswordLogin.getPassword());
 
                 try {
-                    if (username.isEmpty() || username.isBlank()) {
+                    if (username.isEmpty()) {
                         throw new IllegalArgumentException("Username not Blank");
                     } else if (password.isEmpty()) {
                         throw new IllegalArgumentException("Password not Blank");

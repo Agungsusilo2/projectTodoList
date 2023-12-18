@@ -41,11 +41,6 @@ public class LoginRegisterRepositoryImp implements LoginRegisterRepository {
     }
 
     @Override
-    public LoginRegister[] findAll() {
-        return this.loginRegisters;
-    }
-
-    @Override
     public boolean LoginUser(String username, String paswword) {
         for (int i = 0; i < this.loginRegisters.length; i++) {
             if (this.loginRegisters[i] != null && this.loginRegisters[i].getUsername().equals(username) &&
